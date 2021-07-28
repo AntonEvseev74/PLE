@@ -1,9 +1,6 @@
 package ru.evant.ple.parser;
 
-import ru.evant.ple.ast.BinaryExpression;
-import ru.evant.ple.ast.Expression;
-import ru.evant.ple.ast.NumberExpression;
-import ru.evant.ple.ast.UnaryExpression;
+import ru.evant.ple.ast.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +81,9 @@ public final class Parser {
         }
         if (match(TokenType.HEX_NUMBER)){
             return new NumberExpression(Long.parseLong(current.getText(), 16));
+        }
+        if (match(TokenType.WORD)){
+            return new ConstantExpression(current.getText());
         }
         if (match(TokenType.LPAREN)){
             Expression result = expression();

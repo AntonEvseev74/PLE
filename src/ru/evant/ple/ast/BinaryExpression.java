@@ -28,6 +28,6 @@ public final class BinaryExpression implements Expression {
 
     @Override
     public String toString() {
-        return String.format("%s %c %s", exp1, operation, exp2);
+        return String.format("(%s %c %s)", exp1, operation, exp2);
     }
 }

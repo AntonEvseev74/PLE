@@ -30,9 +30,9 @@ public class Lexer {
     public List<Token> tokenize() {
         while (pos < length) {
             final char current = peek(0);
-            if (Character.isDigit(current)) {
-                tokenizeNumber();
-            } else if (current == '#') {
+            if (Character.isDigit(current)) tokenizeNumber();
+            else if (Character.isLetter(current)) tokenizeWord();
+            else if (current == '#') {
                 next();
                 tokenizeHexNumber();
             } else if (OPERATOR_CHARS.indexOf(current) != -1) {
@@ -43,6 +43,19 @@ public class Lexer {
             }
         }
         return tokens;
+    }
+
+    private void tokenizeWord() {
+        final StringBuilder buffer = new StringBuilder();
+        char current = peek(0);
+        while (true) {
+            if (!Character.isLetterOrDigit(current) && (current != '_') && (current != '$')){
+                break;
+            }
+            buffer.append(current);
+            current = next();
+        }
+        addToken(TokenType.WORD, buffer.toString());
     }
 
     private void tokenizeHexNumber() {
@@ -62,7 +75,14 @@ public class Lexer {
     private void tokenizeNumber() {
         final StringBuilder buffer = new StringBuilder();
         char current = peek(0);
-        while (Character.isDigit(current)) {
+        while (true) {
+            if (current == '.'){
+                if (buffer.indexOf(".") != -1) {
+                    throw new RuntimeException("неправильное вещественное число");
+                }
+            } else if (!Character.isDigit(current)){
+                break;
+            }
             buffer.append(current);
             current = next();
         }

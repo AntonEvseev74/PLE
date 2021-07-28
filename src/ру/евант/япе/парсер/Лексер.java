@@ -34,9 +34,9 @@ public class Лексер {
     public List<Токен> токенизировать() {
         while (поз < длина) {
             final char текущий = peek(0);
-            if (Character.isDigit(текущий)) {
-                токенизироватьЧисло();
-            } else if (текущий == '#') {
+            if (Character.isDigit(текущий)) токенизироватьЧисло();
+            else if (Character.isLetter(текущий)) токенизироватьСлово();
+            else if (текущий == '#') {
                 дальше();
                 токенизироватьШЧисло();
             } else if (ОПЕРАТОР_СИМВОЛ.indexOf(текущий) != -1) {
@@ -47,6 +47,19 @@ public class Лексер {
             }
         }
         return токены;
+    }
+
+    private void токенизироватьСлово() {
+        final StringBuilder буфер = new StringBuilder();
+        char текущий = peek(0);
+        while (true) {
+            if(!Character.isDigit(текущий) && (текущий != '_' && (текущий != '$'))){
+                break;
+            }
+            буфер.append(текущий);
+            текущий = дальше();
+        }
+        добавитьТокен(ТокенТип.СЛОВО, буфер.toString());
     }
 
     private void токенизироватьШЧисло() {
@@ -66,7 +79,14 @@ public class Лексер {
     private void токенизироватьЧисло() {
         final StringBuilder буфер = new StringBuilder();
         char текущий = peek(0);
-        while (Character.isDigit(текущий)) {
+        while (true) {
+            if (текущий == '.'){
+                if (буфер.indexOf(".") != -1){
+                    throw new RuntimeException("неправильное вещественное число");
+                }
+            } else if(!Character.isDigit(текущий)){
+                break;
+            }
             буфер.append(текущий);
             текущий = дальше();
         }

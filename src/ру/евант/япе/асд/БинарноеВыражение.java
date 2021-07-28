@@ -32,6 +32,6 @@ public final class БинарноеВыражение implements Выражен�
 
     @Override
     public String toString() {
-        return String.format("%s %c %s", выражение1, операция, выражение2);
+        return String.format("(%s %c %s)", выражение1, операция, выражение2);
     }
 }

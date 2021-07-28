@@ -14,7 +14,8 @@ public class Main {
         final String ввод = "2 + 2";
         final String ввод2 = "2 + 2 * 6";
         final String ввод3 = "#0E + #0F";
-        final List<Токен> токены = new Лексер(ввод2).токенизировать();
+        final String ввод4 = "3.14 * 2";
+        final List<Токен> токены = new Лексер(ввод4).токенизировать();
         for (Токен токен : токены) {
             System.out.println(токен);
         }
