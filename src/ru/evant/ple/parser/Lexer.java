@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Lexer {
 
-    private static final String OPERATOR_CHARS = "+-*/()";
+    private static final String OPERATOR_CHARS = "+-*/()=";
     private static final TokenType[] OPERATOR_TOKENS = {
             TokenType.PLUS, TokenType.MINUS, TokenType.MULTIPLY, TokenType.DIVIDE,
-            TokenType.LPAREN, TokenType.RPAREN,
+            TokenType.LPAREN, TokenType.RPAREN, TokenType.EQ,
     };
 
     private final String input;

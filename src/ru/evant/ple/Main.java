@@ -1,6 +1,7 @@
 package ru.evant.ple;
 
 import ru.evant.ple.ast.Expression;
+import ru.evant.ple.ast.Statement;
 import ru.evant.ple.parser.Lexer;
 import ru.evant.ple.parser.Parser;
 import ru.evant.ple.parser.Token;
@@ -16,14 +17,18 @@ public class Main {
         final String input3 = "#0E + #0F";
         final String input4 = "3.14 * 2";
         final String input5 = "PI * 2";
-        final List<Token> tokens = new Lexer(input5).tokenize();
+        final String input6 = "x = 2 + 2";
+        final List<Token> tokens = new Lexer(input6).tokenize();
         for (Token token : tokens) {
             System.out.println(token);
         }
 
-        final List<Expression> expressions = new Parser(tokens).parse();
-        for (Expression expr:expressions) {
-            System.out.println(expr + " = " + expr.eval());
+        final List<Statement> statements = new Parser(tokens).parse();
+        for (Statement statement:statements) {
+            System.out.println(statement);
+        }
+        for (Statement statement:statements) {
+            statement.execute();
         }
     }
 }

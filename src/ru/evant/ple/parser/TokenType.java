@@ -11,6 +11,8 @@ public enum TokenType {
     MULTIPLY,   // умножить
     DIVIDE,     // разделить
 
+    EQ,     // равно
+
     LPAREN,     // открывающая скобка  (
     RPAREN,     // закрывающая скобка  )
 

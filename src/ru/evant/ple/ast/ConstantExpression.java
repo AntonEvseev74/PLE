@@ -2,9 +2,6 @@ package ru.evant.ple.ast;
 
 import ru.evant.ple.lib.Constants;
 
-/**
- * @author EvAnt
- */
 public final class ConstantExpression implements Expression{
 
     private final String name;

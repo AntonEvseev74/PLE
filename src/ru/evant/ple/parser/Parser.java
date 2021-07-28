@@ -18,12 +18,28 @@ public final class Parser {
         size = tokens.size();
     }
 
-    public List<Expression> parse() {
-        final List<Expression> result = new ArrayList<>();
+    public List<Statement> parse() {
+        final List<Statement> result = new ArrayList<>();
         while (!match(TokenType.EOF)){
-            result.add(expression());
+            result.add(statement());
         }
         return result;
+    }
+
+    private Statement statement() {
+        return assignmentStatement();
+    }
+
+    private Statement assignmentStatement() {
+        // WORD, EQ
+        final Token current = get(0);
+        if (current.getType() == TokenType.WORD && get(1).getType() == TokenType.EQ){
+            match(TokenType.WORD);
+            final String variable = current.getText();
+            match(TokenType.EQ);
+            return new AssignmentStatement(variable,expression());
+        }
+        throw new RuntimeException("неизвестный оператор");
     }
 
     private Expression expression() {
